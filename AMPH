@@ -1,0 +1,413 @@
+
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Ampheromine's Hub | RedWood Prison", HidePremium = false, IntroEnabled = true, SaveConfig = true, IntroText = "Orion library", IntroIcon = "rbxassetid://4483362748", Icon = "rbxassetid://4483362748", ConfigFolder = "Loader"})
+ 
+local Tab = Window:MakeTab({
+    Name = "drawLaser",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+local Section = Tab:AddSection({
+    Name = "DrawLaser"
+})
+Tab:AddButton({
+    Name = "Click Kill",
+    Callback = function()
+local lib = require(game:GetService("Workspace").upsilonLibrary)
+local lib = require(game:GetService("Workspace").upsilonLibrary)
+local mouse = game.Players.LocalPlayer:GetMouse()
+local tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Kill"
+local cooldown = 0.5
+local lastActivated = 0
+function CreateBubble(position)
+    local Bubble = Instance.new("Part")
+    Bubble.Parent = workspace
+    Bubble.CastShadow = false
+    Bubble.CanCollide = false
+    Bubble.Anchored = true
+    Bubble.Shape = Enum.PartType.Ball
+    Bubble.BrickColor = BrickColor.new("Bright blue")
+    Bubble.Material = Enum.Material.Neon
+    Bubble.CFrame = CFrame.new(position)
+    Bubble.Transparency = 0
+    function Portal(part)
+        local properties = {
+            CanCollide = false,
+            Parent = workspace,
+            Anchored = true,
+            BrickColor = part.BrickColor,
+            RotVelocity = part.RotVelocity,
+            Name = part.Name,
+            Position = part.Position,
+            CFrame = part.CFrame,
+            Material = part.Material,
+            Shape = part.Shape,
+            Size = part.Size,
+            CastShadow = false,
+            Transparency = 1
+        }
+        lib.FireOtherClients("drawLaser", part.Position, part.Position, properties)
+    end
+    local function animateBubble()
+        Bubble.Size = Vector3.new(15, 15, 15)
+        wait(0.1)
+        Bubble.Size = Vector3.new(14, 14, 14)
+        wait(0.1)
+        Bubble.Size = Vector3.new(13, 13, 13)
+        wait(0.1)
+        Bubble.Size = Vector3.new(12, 12, 12)
+        wait(0.1)
+        Bubble.Size = Vector3.new(11, 11, 11)
+        wait(0.1)
+        Bubble.Size = Vector3.new(10, 10, 10)
+        wait(0.1)
+        Bubble.Size = Vector3.new(9, 9, 9)
+        wait(0.1)
+        Bubble.Size = Vector3.new(8, 8, 8)
+        wait(0.1)
+        Bubble.Size = Vector3.new(7, 7, 7)
+        wait(0.1)
+        Bubble.Size = Vector3.new(6, 6, 6)
+        wait(0.1)
+        Bubble.Size = Vector3.new(5, 5, 5)
+        wait(0.1)
+        Bubble.Size = Vector3.new(4, 4, 4)
+        wait(0.1)
+        Bubble.Size = Vector3.new(3, 3, 3)
+        wait(0.1)
+        Bubble.Size = Vector3.new(2, 2, 2)
+        wait(0.1)
+        Bubble.Size = Vector3.new(1, 1, 1)
+        wait(0.1)
+        Bubble:Destroy()
+    end
+    local function teleportBubble()
+        while true do
+            Portal(Bubble)
+            if Bubble.Size.X <= 1 then
+                break
+            end
+            wait()
+        end
+    end
+    spawn(teleportBubble)
+    coroutine.wrap(animateBubble)()
+end
+function FireLaserOnPlayers(position)
+    return coroutine.create(function()
+        for _, player in ipairs(game.Players:GetPlayers()) do
+            if player ~= game.Players.LocalPlayer then
+                local distance = (player.Character.HumanoidRootPart.Position - position).Magnitude
+                if distance <= 15 then
+                    for x = 1, 2 do
+                        local args = {
+                            [1] = "FireOtherClients",
+                            [2] = "drawLaser",
+                            [3] = Vector3.new(0, 0, 0),
+                            [4] = Vector3.new(0, 0, 0),
+                            [5] = {
+                                ["Name"] = "Head",
+                                ["CFrame"] = player.Character.Head.CFrame,
+                                ["Material"] = Enum.Material.ForceField,
+                                ["Parent"] = player.Character,
+                                ["Size"] = Vector3.new(0.001, 0.001, 0.001),
+                                ["Transparency"] = 1
+                            }
+                        }
+                        workspace.resources.RemoteEvent:FireServer(unpack(args))
+                    end
+                end
+            end
+        end
+    end)
+end
+local function RunFireLaserOnPlayers(position)
+    local coroutineFireLaser = FireLaserOnPlayers(position)
+    coroutine.resume(coroutineFireLaser)
+end
+tool.Activated:Connect(function()
+    local currentTime = tick()
+    if currentTime - lastActivated >= cooldown then
+        lastActivated = currentTime
+        CreateBubble(mouse.Hit.Position)
+        coroutine.wrap(RunFireLaserOnPlayers)(mouse.Hit.Position)
+    end
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+    end    
+})
+Tab:AddButton({
+    Name = "Lightsaber",
+    Callback = function()
+local Tool = Instance.new("Tool", game.Players.LocalPlayer.Backpack)
+local Handle = Instance.new("Part", Tool)
+local Part2 = Instance.new("Part", Tool)
+local HandleWeld = Instance.new("Weld", Handle)
+local SwingSound = Instance.new("Sound", Handle)
+local lib = require(game:GetService("Workspace").upsilonLibrary)
+ 
+Tool.Name = "Lightsaber"
+HandleWeld.C0 = CFrame.new(0, 0, 0)
+HandleWeld.Part0 = Part2
+HandleWeld.Part1 = Handle
+Handle.Name = "Handle"
+Handle.CFrame = CFrame.new(-42.9000015, 1.10000038, -146.100006, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+Handle.Position = Vector3.new(-42.900001525878906, 1.1000003814697266, -146.10000610351562)
+Handle.Color = Color3.fromRGB(0, 0, 0)
+Handle.Size = Vector3.new(0.2, 1.3, 0.19)
+Handle.BottomSurface = Enum.SurfaceType.Smooth
+Handle.BrickColor = BrickColor.new("Really black")
+Handle.CanCollide = false
+Handle.Material = Enum.Material.Neon
+Handle.TopSurface = Enum.SurfaceType.Smooth
+ 
+Part2.CFrame = CFrame.new(-42.9029617, 3.24664497, -146.100006, 0, 0, 1, -1, 0, 0, 0, -1, 0)
+Part2.Orientation = Vector3.new(0, 90, -90)
+Part2.Position = Vector3.new(-42.90296173095703, 3.246644973754883, -146.10000610351562)
+Part2.Rotation = Vector3.new(-90, 90, 0)
+Part2.Color = Color3.fromRGB(255, 102, 204)
+Part2.Size = Vector3.new(5, 0.2, 0.2)
+Part2.BottomSurface = Enum.SurfaceType.Smooth
+Part2.BrickColor = BrickColor.new(LightsaberColor)
+Part2.CanCollide = true
+Part2.Material = Enum.Material.Neon
+Part2.TopSurface = Enum.SurfaceType.Smooth
+Part2.Shape = Enum.PartType.Cylinder
+ 
+HandleWeld.C0 = HandleWeld.C0 * CFrame.new(3.15, 0, 0) * CFrame.Angles(0, 0, math.rad(90))
+ 
+SwingSound.Volume = 1
+SwingSound.SoundId = "rbxassetid://605565775"
+ 
+function sword(part)
+    local properties = {
+        ["CanCollide"] = false,
+        ["Parent"] = workspace,
+        ["Anchored"] = true,
+        ["Color"] = part.Color,
+        ["CFrame"] = part.CFrame,
+        ["Material"] = part.Material,
+        ["Shape"] = part.Shape,
+        ["Size"] = part.Size,
+        ["CastShadow"] = true
+    }
+ 
+    lib.FireOtherClients("drawLaser", part.Position, part.Position, properties)
+end
+ 
+local ToolEquipped = false
+local ToolActive = false
+ 
+Tool.Equipped:Connect(function()
+    if not ToolEquipped then
+        ToolEquipped = true
+        while wait() do
+            if not ToolEquipped then
+                break 
+            end
+            sword(Handle)
+            sword(Part2)
+        end
+    end
+end)
+ 
+Tool.Unequipped:Connect(function()
+    if ToolEquipped then
+        ToolEquipped = false
+    end
+end)
+ 
+Tool.Activated:Connect(function()
+    if ToolEquipped and not ToolActive then
+        ToolActive = true
+ 
+        AnimationId = "218504594"
+ 
+        local Anim = Instance.new("Animation")
+        Anim.AnimationId = "rbxassetid://" .. AnimationId
+ 
+        local humanoid = game.Players.LocalPlayer.Character.Humanoid
+        local animation = humanoid:LoadAnimation(Anim)
+        animation:Play()
+        animation:AdjustSpeed(1)
+ 
+local localPlayer = game.Players.LocalPlayer
+local localPlayerCharacter = localPlayer.Character
+local localPlayerHumanoidRootPart = localPlayerCharacter and localPlayerCharacter:FindFirstChild("HumanoidRootPart")
+ 
+if localPlayerHumanoidRootPart then
+    local targetPosition = localPlayerHumanoidRootPart.Position
+ 
+    local players = game.Players:GetPlayers()
+    for _, otherPlayer in ipairs(players) do
+        local otherPlayerCharacter = otherPlayer.Character
+        if otherPlayerCharacter then
+            local otherPlayerHumanoidRootPart = otherPlayerCharacter:FindFirstChild("HumanoidRootPart")
+            if otherPlayerHumanoidRootPart then
+                if (otherPlayerHumanoidRootPart.Position - targetPosition).Magnitude <= 10 then
+                    for x = 1, 2 do
+                        local args = {
+                            [1] = "FireOtherClients",
+                            [2] = "drawLaser",
+                            [3] = Vector3.new(0, 0, 0),
+                            [4] = Vector3.new(0, 0, 0),
+                            [5] = {
+                                ["Name"] = "Head",
+                                ["CFrame"] = otherPlayerCharacter.Head.CFrame,
+                                ["Material"] = Enum.Material.ForceField,
+                                ["Parent"] = otherPlayerCharacter,
+                                ["Size"] = Vector3.new(0.001, 0.001, 0.001),
+                                ["Transparency"] = 1
+                            }
+                        }
+ 
+                        workspace.resources.RemoteEvent:FireServer(unpack(args))
+                    end
+                end
+            end
+        end
+    end
+end
+ 
+        SwingSound.PlaybackSpeed = (math.random(6, 11) / 10)
+        SwingSound:Play()
+        wait(0.7)
+        ToolActive = false
+    end
+end)
+    end    
+})
+Tab:AddButton({
+    Name = "ESP",
+    Callback = function()
+local function highlightPlayers()
+    -- Get all players in the game
+    local players = game:GetService("Players"):GetPlayers()
+    
+    -- Loop through each player
+    for _, player in ipairs(players) do
+        -- Create a highlight effect
+        local highlight = Instance.new("SelectionBox")
+        highlight.Name = "Highlight"
+        highlight.Color = Color3.fromRGB(255, 105, 180) -- Pink color
+        
+        -- Attach the highlight effect to the player's character
+        highlight.Adornee = player.Character
+        
+        -- Parent the highlight effect to the player's character
+        highlight.Parent = player.Character
+        
+        -- Adjust the size of the highlight effect
+        highlight.Size = player.Character:GetExtentsSize() * 1.5 -- Increase size by 50%
+    end
+end
+
+-- Function to remove all existing highlight effects
+local function removeHighlightEffects()
+    for _, player in ipairs(game:GetService("Players"):GetPlayers()) do
+        local highlight = player.Character and player.Character:FindFirstChild("Highlight")
+        if highlight then
+            highlight:Destroy()
+        end
+    end
+end
+
+-- Call the highlightPlayers function initially
+highlightPlayers()
+
+-- Refresh the script every 10 seconds
+while wait(10) do
+    -- Remove all existing highlight effects
+    removeHighlightEffects()
+    
+    -- Call the highlightPlayers function again
+    highlightPlayers()
+end
+})
+Tab:AddToggle({
+    Name = "Bubble",
+    Default = false,
+    Callback = function(Value)
+    loopEnabled = Value
+    if Value then
+        if not Bubble then
+            Bubble = Instance.new("Part")
+            Bubble.Name = "Bubble"
+            Bubble.Parent = Workspace
+            Bubble.Size = Vector3.new(10, 10, 10)
+            Bubble.CastShadow = true
+            Bubble.CanCollide = false
+            Bubble.Anchored = true
+            Bubble.Shape = Enum.PartType.Ball
+            Bubble.Color = Color3.fromRGB(255, 102, 204)
+            Bubble.Material = Enum.Material.ForceField
+            Bubble.Transparency = 0
+            function Shield(part)
+                local properties = {
+                    CanCollide = true,
+                    Parent = Workspace,
+                    Anchored = true,
+                    BrickColor = part.BrickColor,
+                    RotVelocity = part.RotVelocity,
+                    Name = part.Name,
+                    Position = part.Position,
+                    Material = part.Material,
+                    Shape = part.Shape,
+                    Size = part.Size,
+                    CastShadow = true,
+                    Transparency = 1
+                }
+                lib.FireOtherClients("drawLaser", part.Position, part.Position, properties)
+            end
+            local function RespawnBubble(character)
+                if Bubble then
+                    Bubble:Destroy()
+                    Bubble = nil
+                end
+                if character and loopEnabled then
+                    wait(1)
+                    Bubble = Instance.new("Part")
+                    Bubble.Name = "Bubble"
+                    Bubble.Parent = Workspace
+                    Bubble.Size = Vector3.new(20, 20, 20)
+                    Bubble.CastShadow = true
+                    Bubble.CanCollide = false
+                    Bubble.Anchored = true
+                    Bubble.Shape = Enum.PartType.Ball
+                    Bubble.Color = Color3.fromRGB(17, 17, 17)
+                    Bubble.Material = Enum.Material.ForceField
+                    Bubble.Transparency = 0
+                    Bubble.CFrame = character.HumanoidRootPart.CFrame
+                    Shield(Bubble)
+                end
+            end
+            RespawnBubble(game.Players.LocalPlayer.Character)
+            game.Players.LocalPlayer.CharacterAdded:Connect(RespawnBubble)
+            game.Players.LocalPlayer.CharacterRemoving:Connect(function(character)
+                if Bubble then
+                    Bubble:Destroy()
+                    Bubble = nil
+                end
+            end)
+        end
+        while loopEnabled do
+            wait()
+            if Bubble and game.Players.LocalPlayer.Character then
+                Bubble.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                Shield(Bubble)
+            end
+        end
+    else
+        loopEnabled = false
+        if Bubble then
+            Bubble:Destroy()
+            Bubble = nil
+        end
+    end
+    end    
+})
+ 
+OrionLib:Init()
+
